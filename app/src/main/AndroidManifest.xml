@@ -38,6 +38,7 @@
             android:theme="@style/Theme.Design.Light.NoActionBar">
         </activity>
 
+
         <receiver
             android:name=".CallReceiver"
             android:enabled="true"
@@ -53,6 +54,8 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".main.contacts.importcontact.ImportContactActivity"
             android:parentActivityName=".main.MainActivity"/>
+
+        <service android:enabled="true" android:name=".CallRecordingService"/>
     </application>
 
 </manifest>

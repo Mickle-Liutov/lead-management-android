@@ -66,8 +66,12 @@ public class CallReceiver extends BroadcastReceiver {
         final PendingIntent contentIntent = PendingIntent.getActivity(mContext, 0,
                 notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
+        final Intent recorderIntent = new Intent(mContext, CallRecordingService.class);
+        PendingIntent recorderPendingIntent = PendingIntent.getService(mContext, 0, recorderIntent, 0);
+
         final NotificationCompat.Builder notification = new NotificationCompat.Builder(mContext)
                 .setSmallIcon(R.drawable.ic_call_black_24dp)
+                .addAction(R.drawable.ic_settings_black_24dp,"Record call",recorderPendingIntent)
                 .setContentTitle("Call in Progress")
                 .setTicker("Lead Management")
                 .setContentIntent(contentIntent)
@@ -88,4 +92,5 @@ public class CallReceiver extends BroadcastReceiver {
             manager.notify(ID, notification.build());
         }
     }
+
 }
