@@ -1,5 +1,6 @@
 package com.community.jboss.leadmanagement;
 
+import android.app.ActivityManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -53,6 +54,11 @@ public class CallReceiver extends BroadcastReceiver {
         if (manager != null) {
             manager.cancel(ID);
         }
+        final Intent recorderIntent = new Intent(mContext, CallRecordingService.class);
+        if(isMyServiceRunning(CallRecordingService.class)) {
+            recorderIntent.putExtra("Command", "STOP");
+            mContext.startService(recorderIntent);
+        }
     }
 
     private void showNotification() {
@@ -67,6 +73,7 @@ public class CallReceiver extends BroadcastReceiver {
                 notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         final Intent recorderIntent = new Intent(mContext, CallRecordingService.class);
+
         PendingIntent recorderPendingIntent = PendingIntent.getService(mContext, 0, recorderIntent, 0);
 
         final NotificationCompat.Builder notification = new NotificationCompat.Builder(mContext)
@@ -93,4 +100,13 @@ public class CallReceiver extends BroadcastReceiver {
         }
     }
 
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
