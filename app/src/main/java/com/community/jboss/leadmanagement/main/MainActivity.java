@@ -11,6 +11,7 @@ import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -53,6 +54,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
+
 import static com.community.jboss.leadmanagement.SettingsActivity.PREF_DARK_THEME;
 
 public class MainActivity extends BaseActivity
@@ -131,9 +133,18 @@ public class MainActivity extends BaseActivity
 
 
         permissionManager = new PermissionManager(this, this);
-        if (!permissionManager.permissionStatus(Manifest.permission.READ_PHONE_STATE)) {
+        if (!permissionManager.permissionStatus(Manifest.permission.RECORD_AUDIO) && !permissionManager.permissionStatus(Manifest.permission.READ_PHONE_STATE) ){
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.RECORD_AUDIO,Manifest.permission.READ_PHONE_STATE},
+                    ID);
+        }
+        else if (!permissionManager.permissionStatus(Manifest.permission.READ_PHONE_STATE)) {
             permissionManager.requestPermission(ID, Manifest.permission.READ_PHONE_STATE);
         }
+        else if(!permissionManager.permissionStatus(Manifest.permission.RECORD_AUDIO)){
+            permissionManager.requestPermission(ID, Manifest.permission.RECORD_AUDIO);
+        }
+
 
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
