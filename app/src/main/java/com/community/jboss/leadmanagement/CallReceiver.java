@@ -8,11 +8,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.NotificationCompat;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 
 import com.community.jboss.leadmanagement.main.contacts.editcontact.EditContactActivity;
+
+import androidx.core.app.NotificationCompat;
 
 public class CallReceiver extends BroadcastReceiver {
     private static final int ID = 47981;

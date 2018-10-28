@@ -1,13 +1,9 @@
 package com.community.jboss.leadmanagement.main.contacts.editcontact;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -15,6 +11,10 @@ import android.widget.EditText;
 import com.community.jboss.leadmanagement.R;
 import com.community.jboss.leadmanagement.data.entities.ContactNumber;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -24,7 +24,7 @@ public class EditContactActivity extends AppCompatActivity {
     public static final String INTENT_EXTRA_CONTACT_NUM = "INTENT_EXTRA_CONTACT_NUM";
 
     @BindView(R.id.add_contact_toolbar)
-    android.support.v7.widget.Toolbar toolbar;
+    androidx.appcompat.widget.Toolbar toolbar;
     @BindView(R.id.contact_name_field)
     EditText contactNameField;
     @BindView(R.id.contact_number_field)

@@ -6,9 +6,9 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.Uri;
 import android.preference.PreferenceManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +18,6 @@ import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.graphics.Color;
-
-import static com.community.jboss.leadmanagement.SettingsActivity.PREF_DARK_THEME;
 
 import com.community.jboss.leadmanagement.CustomDialogBox;
 import com.community.jboss.leadmanagement.PermissionManager;
@@ -34,8 +31,11 @@ import com.community.jboss.leadmanagement.utils.DbUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.community.jboss.leadmanagement.SettingsActivity.PREF_DARK_THEME;
 
 
 public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHolder> implements Filterable {

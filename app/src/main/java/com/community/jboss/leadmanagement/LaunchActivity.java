@@ -2,9 +2,10 @@ package com.community.jboss.leadmanagement;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
 import com.community.jboss.leadmanagement.main.MainActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class LaunchActivity extends AppCompatActivity {
     @Override

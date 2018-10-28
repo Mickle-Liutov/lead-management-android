@@ -1,15 +1,16 @@
 package com.community.jboss.leadmanagement.main.contacts;
 
 import android.app.Application;
-import android.arch.lifecycle.AndroidViewModel;
-import android.arch.lifecycle.LiveData;
-import android.support.annotation.NonNull;
 
 import com.community.jboss.leadmanagement.data.daos.ContactDao;
 import com.community.jboss.leadmanagement.data.entities.Contact;
 import com.community.jboss.leadmanagement.utils.DbUtil;
 
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 
 public class ContactsFragmentViewModel extends AndroidViewModel {
     private LiveData<List<Contact>> mContacts;

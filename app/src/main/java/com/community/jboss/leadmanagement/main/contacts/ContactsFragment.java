@@ -1,12 +1,6 @@
 package com.community.jboss.leadmanagement.main.contacts;
 
-import android.animation.LayoutTransition;
-import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,6 +15,10 @@ import com.community.jboss.leadmanagement.data.entities.Contact;
 import com.community.jboss.leadmanagement.main.MainActivity;
 import com.community.jboss.leadmanagement.main.MainFragment;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
