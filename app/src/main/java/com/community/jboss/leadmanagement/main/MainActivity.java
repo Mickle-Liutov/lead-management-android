@@ -133,18 +133,11 @@ public class MainActivity extends BaseActivity
 
 
         permissionManager = new PermissionManager(this, this);
-        if (!permissionManager.permissionStatus(Manifest.permission.RECORD_AUDIO) && !permissionManager.permissionStatus(Manifest.permission.READ_PHONE_STATE) ){
+        if (!permissionManager.permissionStatus(Manifest.permission.RECORD_AUDIO) || !permissionManager.permissionStatus(Manifest.permission.READ_PHONE_STATE) || !permissionManager.permissionStatus(Manifest.permission.WRITE_EXTERNAL_STORAGE) ){
             ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.RECORD_AUDIO,Manifest.permission.READ_PHONE_STATE},
+                    new String[]{Manifest.permission.RECORD_AUDIO,Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     ID);
         }
-        else if (!permissionManager.permissionStatus(Manifest.permission.READ_PHONE_STATE)) {
-            permissionManager.requestPermission(ID, Manifest.permission.READ_PHONE_STATE);
-        }
-        else if(!permissionManager.permissionStatus(Manifest.permission.RECORD_AUDIO)){
-            permissionManager.requestPermission(ID, Manifest.permission.RECORD_AUDIO);
-        }
-
 
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
