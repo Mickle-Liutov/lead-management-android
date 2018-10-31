@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dp">
+
+    <TextView
+        android:id="@+id/contact_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:singleLine="true"
+        android:maxEms="5"
+        android:ellipsize="end"
+        android:text="Michael:"
+        android:textColor="@color/WidgetGB"
+        android:textSize="20sp"
+        android:layout_marginLeft="8dp"/>
+    <TextView
+        android:id="@+id/contact_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:text="1234567890"
+        android:textColor="@color/WidgetGB"
+        android:textSize="20sp"
+        android:layout_marginRight="8dp"/>
+
+</RelativeLayout>

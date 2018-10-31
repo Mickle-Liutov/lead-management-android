@@ -18,6 +18,15 @@
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
 
+        <receiver android:name=".widget.WidgetRecentContacts" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.community.jboss.leadmanagement.WIDGET_BUTTON"/>
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/recent_contacts_widget_info" />
+        </receiver>
+
         <activity
             android:name=".LaunchActivity"
             android:theme="@style/AppTheme.Launch">
@@ -53,6 +62,8 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".main.contacts.importcontact.ImportContactActivity"
             android:parentActivityName=".main.MainActivity"/>
+        <service android:name=".widget.RemoteViewsService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"/>
     </application>
 
 </manifest>
