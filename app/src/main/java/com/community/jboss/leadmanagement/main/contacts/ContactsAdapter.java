@@ -1,34 +1,28 @@
 package com.community.jboss.leadmanagement.main.contacts;
 
-import android.Manifest;
 import android.app.Activity;
-import android.app.Dialog;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
+import android.graphics.Color;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.graphics.Color;
 
-import static com.community.jboss.leadmanagement.SettingsActivity.PREF_DARK_THEME;
-
+import com.community.jboss.leadmanagement.ContactDialogActivity;
 import com.community.jboss.leadmanagement.CustomDialogBox;
 import com.community.jboss.leadmanagement.PermissionManager;
 import com.community.jboss.leadmanagement.R;
 import com.community.jboss.leadmanagement.SettingsActivity;
 import com.community.jboss.leadmanagement.data.daos.ContactNumberDao;
 import com.community.jboss.leadmanagement.data.entities.Contact;
-import com.community.jboss.leadmanagement.main.contacts.editcontact.EditContactActivity;
 import com.community.jboss.leadmanagement.utils.DbUtil;
 
 import java.util.ArrayList;
@@ -170,78 +164,12 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
 
         @Override
         public void onClick(View view) {
-            final Context context = view.getContext();
 
-            Dialog detailDialog;
-            detailDialog = new Dialog(context);
-
-            TextView txtClose;
-            TextView popupName;
-            TextView contactNum;
-            TextView mail;
-            Button btnEdit;
-            Button btnCall;
-            Button btnMsg;
-            LinearLayout layout;
-
-            detailDialog.setContentView(R.layout.popup_detail);
-            txtClose = detailDialog.findViewById(R.id.txt_close);
-            btnEdit = detailDialog.findViewById(R.id.btn_edit);
-            popupName = detailDialog.findViewById(R.id.popup_name);
-            contactNum = detailDialog.findViewById(R.id.txt_num);
-            btnCall = detailDialog.findViewById(R.id.btn_call);
-            btnMsg = detailDialog.findViewById(R.id.btn_msg);
-            mail = detailDialog.findViewById(R.id.popupMail);
-            layout = detailDialog.findViewById(R.id.popupLayout);
-
-            if(mPref.getBoolean(PREF_DARK_THEME,false)){
-                layout.setBackgroundColor(Color.parseColor("#303030"));
-                popupName.setTextColor(Color.WHITE);
-                contactNum.setTextColor(Color.WHITE);
-                mail.setTextColor(Color.WHITE);
-                txtClose.setBackground(mContext.getResources().getDrawable(R.drawable.ic_close_white));
-            }
-
-            popupName.setText(name.getText());
-            contactNum.setText(number.getText());
-
-            txtClose.setOnClickListener(view1 -> detailDialog.dismiss());
-
-            btnEdit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    final Intent intent = new Intent(context, EditContactActivity.class);
-                    intent.putExtra(EditContactActivity.INTENT_EXTRA_CONTACT_NUM, number.getText().toString());
-                    context.startActivity(intent);
-                }
-            });
-
-
-            btnCall.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if(permManager.permissionStatus(Manifest.permission.CALL_PHONE)) {
-                        Intent intent = new Intent(Intent.ACTION_CALL);
-                        intent.setData(Uri.parse("tel:" + number.getText().toString()));
-                        context.startActivity(intent);
-                    }else{
-                        permManager.requestPermission(58,Manifest.permission.CALL_PHONE);
-                    }
-                }
-            });
-
-            btnMsg.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("sms:"
-                            + number.getText().toString())));
-                }
-            });
-
-            detailDialog.show();
-
-
-
+            Intent contactIntent = new Intent(mContext,ContactDialogActivity.class);
+            contactIntent.putExtra("name",name.getText().toString());
+            contactIntent.putExtra("number",number.getText().toString());
+            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) mContext, view.findViewById(R.id.contact_avatar), mContext.getString(R.string.contact_transition_key));
+            mContext.startActivity(contactIntent,options.toBundle());
         }
 
         @Override

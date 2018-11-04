@@ -51,6 +51,8 @@
             android:name=".main.contacts.importcontact.ImportContactActivity"
             android:parentActivityName=".main.MainActivity" />
         <activity android:name=".InfoSliderActivity"></activity>
+        <activity android:name=".ContactDialogActivity"
+            android:theme="@style/AppTheme.Transparent"/>
     </application>
 
 </manifest>
