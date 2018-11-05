@@ -15,8 +15,14 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
 import com.community.jboss.leadmanagement.ContactDialogActivity;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.graphics.Color;
+import static com.community.jboss.leadmanagement.SettingsActivity.PREF_DARK_THEME;
+import static com.community.jboss.leadmanagement.main.contacts.editcontact.EditContactActivity.bytesToBitmap;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.community.jboss.leadmanagement.CustomDialogBox;
 import com.community.jboss.leadmanagement.PermissionManager;
 import com.community.jboss.leadmanagement.R;
@@ -24,6 +30,7 @@ import com.community.jboss.leadmanagement.SettingsActivity;
 import com.community.jboss.leadmanagement.data.daos.ContactNumberDao;
 import com.community.jboss.leadmanagement.data.entities.Contact;
 import com.community.jboss.leadmanagement.utils.DbUtil;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -115,6 +122,8 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
         TextView name;
         @BindView(R.id.contact_number)
         TextView number;
+        @BindView(R.id.contact_avatar)
+        CircularImageView picture;
         @BindView(R.id.contact_delete)
         ImageButton deleteButton;
 
@@ -148,6 +157,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
             // TODO add contact avatar
             name.setText(contact.getName());
             number.setText(getNumber());
+            Glide.with(mContext).load(bytesToBitmap(contact.getImage())).into(picture);
         }
 
         /**
@@ -164,7 +174,6 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
 
         @Override
         public void onClick(View view) {
-
             Intent contactIntent = new Intent(mContext,ContactDialogActivity.class);
             contactIntent.putExtra("name",name.getText().toString());
             contactIntent.putExtra("number",number.getText().toString());

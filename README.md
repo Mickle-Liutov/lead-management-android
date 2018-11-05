@@ -6,7 +6,7 @@
 A sales lead is a potential sales contact, an individual or organization that expresses an interest in your goods or services. Leads are typically obtained through the referral of an existing customer, or through a direct response to advertising or publicity. A company's marketing department is typically responsible for lead generation.
 
 #### How it works
-*Lead-Management* in the call process shows a notification. If the user clicks this notification, they will simply be redirected to the application to save the contact. If the contact exists, you will see details of the caller, if not you will be redirected to adding this number as contact. After this, the app stores data of the caller in the local database.
+*Lead-Management* in the call process shows a notification. If the user clicks this notification, they will simply be redirected to the application to save the contact. If the contact exists, you will see details of the caller, if not you will be redirected to adding this number as a contact. After this, the app stores data of the caller in the local database.
 This app is currently in development, which means that in the future, many more features will be added.
 
 ### Work Flow
