@@ -13,7 +13,6 @@ import android.support.v4.app.NotificationCompat;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 
-import com.community.jboss.leadmanagement.main.MainActivity;
 import com.community.jboss.leadmanagement.main.contacts.editcontact.EditContactActivity;
 
 public class CallReceiver extends BroadcastReceiver {
@@ -21,6 +20,7 @@ public class CallReceiver extends BroadcastReceiver {
     private Context mContext;
     private String CHANNEL_ID = "LEAD_MANAGEMENT_ID";
     private int ID = 54321;
+    private int SAVE_ID = 567;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -38,6 +38,7 @@ public class CallReceiver extends BroadcastReceiver {
                 switch(state){
                     case TelephonyManager.CALL_STATE_IDLE:
                         hideNotification();
+                        showCallSaveNotification();
                         break;
                     case TelephonyManager.CALL_STATE_OFFHOOK:
                         showNotification(incomingNumber);
@@ -49,6 +50,22 @@ public class CallReceiver extends BroadcastReceiver {
 
     }
 
+    private void showCallSaveNotification(){
+        //
+        Intent saveIntent = new Intent(mContext, EditContactActivity.class);
+        PendingIntent savePendingIntent = PendingIntent.getActivity(mContext, 0, saveIntent, 0);
+        NotificationCompat.Action action = new NotificationCompat.Action(R.drawable.ic_done_24dp,"Yes",savePendingIntent);
+        final NotificationCompat.Builder notification = new NotificationCompat.Builder(mContext)
+                .setSmallIcon(R.drawable.ic_save)
+                .setContentTitle("Save call information?")
+                .setStyle(new NotificationCompat.BigTextStyle().bigText("Do you want to save what you discussed with this Client?"))
+                .setTicker("Lead Management")
+                .addAction(action);
+        NotificationManager mNotificationManager =
+                (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.notify(SAVE_ID,notification.build());
+
+    }
     private void hideNotification() {
         final NotificationManager manager =
                 (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
