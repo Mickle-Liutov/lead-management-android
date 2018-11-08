@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.community.jboss.leadmanagement.main.MainActivity;
 import com.hololo.tutorial.library.Step;
@@ -15,24 +16,29 @@ public class InfoSliderActivity extends TutorialActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        try {
 
-        addFragment(new Step.Builder().setTitle(getString(R.string.slide_1_header))
-                .setContent(getString(R.string.slide_1_content))
-                .setBackgroundColor(Color.parseColor("#04bcf4"))
-                .setDrawable(R.drawable.ic_hello)
-                .build());
+            addFragment(new Step.Builder().setTitle(getString(R.string.slide_1_header))
+                    .setContent(getString(R.string.slide_1_content))
+                    .setBackgroundColor(Color.parseColor("#04bcf4"))
+                    .setDrawable(R.drawable.ic_hello)
+                    .build());
 
-        addFragment(new Step.Builder().setTitle(getString(R.string.slide_2_header))
-                .setContent(getString(R.string.slide_2_content))
-                .setBackgroundColor(Color.parseColor("#153f87"))
-                .setDrawable(R.drawable.ic_client)
-                .build());
+            addFragment(new Step.Builder().setTitle(getString(R.string.slide_2_header))
+                    .setContent(getString(R.string.slide_2_content))
+                    .setBackgroundColor(Color.parseColor("#153f87"))
+                    .setDrawable(R.drawable.ic_client)
+                    .build());
 
-        addFragment(new Step.Builder().setTitle(getString(R.string.slide_3_header))
-                .setContent(getString(R.string.slide_3_content))
-                .setBackgroundColor(Color.parseColor("#FF4081"))
-                .setDrawable(R.drawable.ic_micro)
-                .build());
+            addFragment(new Step.Builder().setTitle(getString(R.string.slide_3_header))
+                    .setContent(getString(R.string.slide_3_content))
+                    .setBackgroundColor(Color.parseColor("#FF4081"))
+                    .setDrawable(R.drawable.ic_micro)
+                    .build());
+        }
+        catch (Exception e){
+            Toast.makeText(this, "Failed to show info slider", Toast.LENGTH_SHORT).show();
+        }
     }
 
     //Whole tutorial has been completed. Open MainActivity and don't show Info Slider again

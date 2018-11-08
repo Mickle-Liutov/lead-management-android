@@ -17,6 +17,7 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -185,13 +186,18 @@ public class EditContactActivity extends AppCompatActivity {
         final String query = queryField.getText().toString();
         final String notes = notesField.getText().toString();
         final byte[] image = bitmapToBytes(((BitmapDrawable) contact_logo.getDrawable()).getBitmap());
-        mViewModel.saveContact(name);
-
         final String number = contactNumberField.getText().toString();
-        mViewModel.saveContactNumber(number);
-        mViewModel.saveData(email, location, query, image, notes);
+        try {
+            mViewModel.saveContact(name);
+            mViewModel.saveContactNumber(number);
+            mViewModel.saveData(email, location, query, image, notes);
+            finish();
+        }
+        catch (Exception e){
+            Toast.makeText(this,"Failed to save your contact",Toast.LENGTH_SHORT).show();
+        }
 
-        finish();
+
     }
 
     private byte[] bitmapToBytes(Bitmap bitmap) {
@@ -201,7 +207,13 @@ public class EditContactActivity extends AppCompatActivity {
     }
 
     public static Bitmap bytesToBitmap(byte[] bytes){
-        return BitmapFactory.decodeByteArray(bytes , 0, bytes.length);
+        try {
+            return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+        }
+        catch (Exception e){
+            Log.e("EditContactActivity","Failed to convert bytes to Bitmap");
+            return null;
+        }
     }
 
     private boolean checkEditText(EditText editText, String errorStr) {

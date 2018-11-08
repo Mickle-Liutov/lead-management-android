@@ -12,8 +12,8 @@ import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
+import android.widget.Toast;
 
-import com.community.jboss.leadmanagement.main.MainActivity;
 import com.community.jboss.leadmanagement.main.contacts.editcontact.EditContactActivity;
 
 public class CallReceiver extends BroadcastReceiver {
@@ -37,10 +37,21 @@ public class CallReceiver extends BroadcastReceiver {
                 super.onCallStateChanged(state, incomingNumber);
                 switch(state){
                     case TelephonyManager.CALL_STATE_IDLE:
-                        hideNotification();
+                        try {
+                            hideNotification();
+                        }
+                        catch(Exception e){
+                            Toast.makeText(mContext,"Failed to hide notification",Toast.LENGTH_SHORT).show();
+                        }
                         break;
                     case TelephonyManager.CALL_STATE_OFFHOOK:
-                        showNotification(incomingNumber);
+                        try {
+                            showNotification(incomingNumber);
+                        }
+                        catch (Exception e){
+                            e.printStackTrace();
+                            Toast.makeText(mContext,"Failed to show notification",Toast.LENGTH_SHORT).show();
+                        }
                         break;
                 }
                 System.out.println("incomingNumber : "+incomingNumber);

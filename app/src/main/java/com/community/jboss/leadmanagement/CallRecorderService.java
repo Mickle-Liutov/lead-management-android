@@ -47,13 +47,14 @@ public class CallRecorderService extends Service {
         try {
             recorder.prepare();
             recorder.start();
+            Toast.makeText(this, "Started", Toast.LENGTH_SHORT).show();
         } catch (IllegalStateException e) {
             e.printStackTrace();
+            Toast.makeText(this,"Failed to start recording",Toast.LENGTH_LONG).show();
         } catch (IOException e) {
             e.printStackTrace();
+            Toast.makeText(this,"Failed to start recording",Toast.LENGTH_LONG).show();
         }
-
-        Toast.makeText(this, "Started", Toast.LENGTH_SHORT).show();
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -62,7 +63,12 @@ public class CallRecorderService extends Service {
         super.onDestroy();
         try {
             if (null != recorder) {
-                recorder.stop();
+                try {
+                    recorder.stop();
+                }
+                catch (Exception e){
+                    Toast.makeText(this,"Your phone does not support call recording",Toast.LENGTH_LONG).show();
+                }
                 recorder.reset();
                 recorder.release();
 
