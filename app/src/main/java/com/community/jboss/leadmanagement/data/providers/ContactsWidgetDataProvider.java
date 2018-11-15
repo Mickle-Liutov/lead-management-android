@@ -10,7 +10,6 @@ import com.community.jboss.leadmanagement.data.daos.ContactDao;
 import com.community.jboss.leadmanagement.data.entities.Contact;
 import com.community.jboss.leadmanagement.utils.DbUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ContactsWidgetDataProvider implements RemoteViewsService.RemoteViewsFactory {
@@ -18,14 +17,16 @@ public class ContactsWidgetDataProvider implements RemoteViewsService.RemoteView
     private Context context;
     private List<Contact> contactList;
     private LiveData<List<Contact>> contacts;
-    private List<String> contactNames = new ArrayList<>();
+
+    //contactNames is really unnecessary, check how I made it without this list
+    //private List<String> contactNames = new ArrayList<>();
     private Observer<List<Contact>> contactsObserver;
+    private ContactDao contactDao;
 
     public ContactsWidgetDataProvider(Context context){
         this.context = context;
-        ContactDao contactDao = DbUtil.contactDao(context);
+        contactDao = DbUtil.contactDao(context);
         contacts = contactDao.getContacts();
-        contactList = contacts.getValue();
     }
 
     @Override
@@ -45,13 +46,16 @@ public class ContactsWidgetDataProvider implements RemoteViewsService.RemoteView
 
     @Override
     public int getCount() {
+        //App crashed when there were no contacts, so I've added this
+        if(contactList != null)
         return contactList.size();
+        else return 0;
     }
 
     @Override
     public RemoteViews getViewAt(int position) {
         RemoteViews view = new RemoteViews(context.getPackageName(), android.R.layout.simple_list_item_1);
-        view.setTextViewText(android.R.id.text1, contactNames.get(position));
+        view.setTextViewText(android.R.id.text1, contactList.get(position).getName());
         return view;
     }
 
@@ -76,7 +80,7 @@ public class ContactsWidgetDataProvider implements RemoteViewsService.RemoteView
     }
 
     private void playWithTheData() {
-        contactNames.clear();
+
         if (contactsObserver!=null){
             try {
                 contacts.removeObserver(contactsObserver);
@@ -87,14 +91,17 @@ public class ContactsWidgetDataProvider implements RemoteViewsService.RemoteView
         }
         contactsObserver = onContacts -> {
             if (onContacts != null) {
-                contactNames.clear();
-                for (int i = 0; i < onContacts.size(); i++) {
-                    contactNames.add(onContacts.get(i).getName());
-                }
+                //Without contactNames no need for loop here
+                //contactNames.clear();
+                //for (int i = 0; i < onContacts.size(); i++) {
+                //    contactNames.add(onContacts.get(i).getName());
+                //}
+                contactList = onContacts;
             } else {
-                contactNames.add("How about adding some contacts first?");
+                //TODO No contacts
             }
         };
         contacts.observeForever(contactsObserver);
+        contacts = contactDao.getContacts();
     }
 }
