@@ -18,6 +18,15 @@
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
 
+        <receiver android:name=".widget.WidgetAddContact" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.community.jboss.leadmanagement.WIDGET_BUTTON"/>
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/add_contact_widget_info" />
+        </receiver>
+
         <activity
             android:name=".LaunchActivity"
             android:theme="@style/AppTheme.Launch">
