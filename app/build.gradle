@@ -75,6 +75,9 @@ dependencies {
     // Info Slider
     implementation 'com.github.msayan:tutorial-view:v1.0.6'
 
+    //Network
+    implementation 'com.squareup.okhttp3:okhttp:3.11.0'
+
 }
 
 //apply plugin: 'com.google.gms.google-services'

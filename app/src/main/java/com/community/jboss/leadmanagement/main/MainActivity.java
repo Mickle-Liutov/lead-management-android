@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.community.jboss.leadmanagement.AboutActivity;
 import com.community.jboss.leadmanagement.BaseActivity;
 import com.community.jboss.leadmanagement.PermissionManager;
 import com.community.jboss.leadmanagement.R;
@@ -53,6 +54,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
+
 import static com.community.jboss.leadmanagement.SettingsActivity.PREF_DARK_THEME;
 
 public class MainActivity extends BaseActivity
@@ -84,7 +86,7 @@ public class MainActivity extends BaseActivity
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         useDarkTheme = preferences.getBoolean(PREF_DARK_THEME, false);
 
-        if(useDarkTheme) {
+        if (useDarkTheme) {
             setTheme(R.style.AppTheme_BG);
         }
 
@@ -98,20 +100,20 @@ public class MainActivity extends BaseActivity
         mViewModel.getSelectedNavItem().observe(this, this::displayNavigationItem);
 
         NavigationView navView = findViewById(R.id.nav_view);
-        View header =  navView.getHeaderView(0);
+        View header = navView.getHeaderView(0);
 
         header.findViewById(R.id.sign_in_button).setOnClickListener(this);
         header.findViewById(R.id.sign_out_button).setOnClickListener(this);
 
-        boolean isFirebaseAlreadyIntialized=false;
+        boolean isFirebaseAlreadyIntialized = false;
         List<FirebaseApp> firebaseApps = FirebaseApp.getApps(this);
-        for(FirebaseApp app : firebaseApps){
-            if(app.getName().equals(FirebaseApp.DEFAULT_APP_NAME)){
-                isFirebaseAlreadyIntialized=true;
+        for (FirebaseApp app : firebaseApps) {
+            if (app.getName().equals(FirebaseApp.DEFAULT_APP_NAME)) {
+                isFirebaseAlreadyIntialized = true;
             }
         }
 
-        if(!isFirebaseAlreadyIntialized) {
+        if (!isFirebaseAlreadyIntialized) {
             FirebaseApp.initializeApp(this, new FirebaseOptions.Builder()
                     .setApiKey("YOUR_API_KEY")
                     .setApplicationId("YOUR_APPLICATION_ID")
@@ -120,7 +122,7 @@ public class MainActivity extends BaseActivity
                     .setStorageBucket("YOUR_STORAGE_BUCKET").build());
         }
 
-        
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken("YOUR_REQUEST_ID_TOKEN")
                 .requestEmail()
@@ -133,8 +135,8 @@ public class MainActivity extends BaseActivity
         permissionManager = new PermissionManager(this, this);
 
         ID = permissionManager.checkAndAskPermissions(Manifest.permission.READ_PHONE_STATE,
-                                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                Manifest.permission.RECORD_AUDIO);
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.RECORD_AUDIO);
 
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
@@ -186,11 +188,11 @@ public class MainActivity extends BaseActivity
         if (id == R.id.action_settings) {
             startActivity(new Intent(this, SettingsActivity.class));
             return true;
-        }else if( id == R.id.action_import ){
-            if(permissionManager.permissionStatus(Manifest.permission.READ_CONTACTS)){
-                startActivity(new Intent(MainActivity.this,ImportContactActivity.class));
-            }else{
-                permissionManager.requestPermission(109,Manifest.permission.READ_CONTACTS);
+        } else if (id == R.id.action_import) {
+            if (permissionManager.permissionStatus(Manifest.permission.READ_CONTACTS)) {
+                startActivity(new Intent(MainActivity.this, ImportContactActivity.class));
+            } else {
+                permissionManager.requestPermission(109, Manifest.permission.READ_CONTACTS);
             }
             return true;
         }
@@ -219,6 +221,9 @@ public class MainActivity extends BaseActivity
                 darkTheme(false);
                 navigationItem = MainActivityViewModel.NavigationItem.CONTACTS;
                 break;
+            case R.id.nav_about:
+                navigationItem = MainActivityViewModel.NavigationItem.ABOUT;
+                break;
             default:
                 Timber.e("Failed to resolve selected navigation item id");
                 throw new IllegalArgumentException();
@@ -245,10 +250,12 @@ public class MainActivity extends BaseActivity
                 return;
             case TOGGLE_THEME:
                 darkTheme(true);
-
                 return;
             case LIGHT_THEME:
                 darkTheme(false);
+            case ABOUT:
+                startActivity(new Intent(this, AboutActivity.class));
+                return;
             default:
                 Timber.e("Failed to resolve selected NavigationItem");
                 throw new IllegalArgumentException();
@@ -308,7 +315,7 @@ public class MainActivity extends BaseActivity
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             //Snackbar.make(findViewById(R.id.main_layout), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
-                            Toast.makeText(getApplicationContext(), "Authentication failed", Toast.LENGTH_SHORT ).show();
+                            Toast.makeText(getApplicationContext(), "Authentication failed", Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
                         // [START_EXCLUDE]
@@ -341,7 +348,7 @@ public class MainActivity extends BaseActivity
 
     private void updateUI(FirebaseUser user) {
         hideProgressDialog();
-        View header =  navigationView.getHeaderView(0);
+        View header = navigationView.getHeaderView(0);
 
         TextView mDetailTextView = header.findViewById(R.id.nav_detail);
         TextView mStatusTextView = header.findViewById(R.id.nav_status);
@@ -399,17 +406,16 @@ public class MainActivity extends BaseActivity
         startActivity(intent);
     }
 
-    private void visibleBtn(boolean darkTheme){
+    private void visibleBtn(boolean darkTheme) {
         NavigationView navigationView = findViewById(R.id.nav_view);
         Menu menu = navigationView.getMenu();
         MenuItem darkBtn = menu.findItem(R.id.toggle_theme);
         MenuItem lightBtn = menu.findItem(R.id.light_theme);
 
-        if (darkTheme){
+        if (darkTheme) {
             darkBtn.setVisible(false);
             lightBtn.setVisible(true);
-        }
-        else {
+        } else {
             darkBtn.setVisible(true);
             lightBtn.setVisible(false);
         }
