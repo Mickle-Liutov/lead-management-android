@@ -79,5 +79,9 @@ dependencies {
     // Info Slider
     implementation 'com.github.msayan:tutorial-view:v1.0.6'
 
+    //Shortcuts
+    implementation 'com.github.matthiasrobbers:shortbread:1.0.2'
+    annotationProcessor 'com.github.matthiasrobbers:shortbread-compiler:1.0.2'
+
 }
 //apply plugin: 'com.google.gms.google-services'

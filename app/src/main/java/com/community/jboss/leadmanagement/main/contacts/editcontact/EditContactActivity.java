@@ -31,6 +31,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.community.jboss.leadmanagement.R;
 import com.community.jboss.leadmanagement.data.entities.ContactNumber;
+import com.community.jboss.leadmanagement.main.MainActivity;
 import com.community.jboss.leadmanagement.widgets.RecentContactsProvider;
 
 import java.io.ByteArrayOutputStream;
@@ -39,10 +40,11 @@ import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import shortbread.Shortcut;
 
 import static com.community.jboss.leadmanagement.SettingsFragment.PREF_DARK_THEME;
 
-
+@Shortcut(id = "add_contact", icon = R.drawable.ic_add_material, shortLabel = "Add contact", backStack = {MainActivity.class})
 public class EditContactActivity extends AppCompatActivity {
     public static final String INTENT_EXTRA_CONTACT_NUM = "INTENT_EXTRA_CONTACT_NUM";
 

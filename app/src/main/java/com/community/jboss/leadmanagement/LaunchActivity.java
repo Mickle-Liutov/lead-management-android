@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.community.jboss.leadmanagement.main.MainActivity;
 
+import shortbread.Shortbread;
+
 public class LaunchActivity extends AppCompatActivity {
     boolean wasRunBefore;
 
@@ -20,6 +22,7 @@ public class LaunchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch);
+        Shortbread.create(this);
 
         ImageView logo = findViewById(R.id.app_logo);
         TextView title = findViewById(R.id.app_title);
